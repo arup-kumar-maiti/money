@@ -1,0 +1,18 @@
+# Managed by repo-standards
+target-version = "py314"
+
+[lint]
+# Ruff recommends disabling these active rules when using its formatter.
+ignore = [
+  "COM812",
+  "COM819",
+  "D206",
+  "D300",
+  "Q000",
+  "Q001",
+  "Q002",
+  "Q003",
+  "Q004",
+  "W191",
+]
+select = ["ALL"]

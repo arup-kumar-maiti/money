@@ -1,0 +1,2 @@
+# Managed by repo-standards
+pre-commit==4.6.2

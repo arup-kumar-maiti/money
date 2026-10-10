@@ -1,0 +1,73 @@
+---
+# Managed by repo-standards
+minimum_pre_commit_version: 4.6.2
+default_install_hook_types: [pre-commit, commit-msg]
+default_language_version:
+  node: 26.8.1
+exclude: |
+  (?x)(
+    (^|/)(
+      \.git|\.venv|venv|__pycache__|\.cache|\.mypy_cache|
+      \.pytest_cache|\.ruff_cache|build|dist|generated|node_modules|
+      vendor|[^/]+\.egg-info
+    )/|
+    (^|/)([^/]+\.lock|package-lock\.json|pnpm-lock\.yaml)$|
+    \.(parquet|pq)$
+  )
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.10
+    hooks:
+      - id: ruff-format
+        stages: [pre-commit]
+        types_or: [python, pyi]
+      - id: ruff-format
+        alias: ruff-format-check
+        args: [--check]
+        stages: [manual]
+        types_or: [python, pyi]
+      - id: ruff-check
+        args: [--no-fix]
+        stages: [pre-commit, manual]
+        types_or: [python, pyi]
+  - repo: https://github.com/tombi-toml/tombi-pre-commit
+    rev: v1.5.5
+    hooks:
+      - id: tombi-format
+        stages: [pre-commit]
+      - id: tombi-format
+        alias: tombi-format-check
+        args: [--check]
+        stages: [manual]
+      - id: tombi-lint
+        stages: [pre-commit, manual]
+  - repo: https://github.com/rbubley/mirrors-prettier
+    rev: v3.9.9
+    hooks:
+      - id: prettier
+        stages: [pre-commit]
+        types_or: [markdown, yaml]
+      - id: prettier
+        alias: prettier-check
+        entry: prettier --check
+        stages: [manual]
+        types_or: [markdown, yaml]
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.23.3
+    hooks:
+      - id: markdownlint-cli2
+        args: [--no-globs, --]
+        stages: [pre-commit, manual]
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.38.0
+    hooks:
+      - id: yamllint
+        args: [--strict]
+        stages: [pre-commit, manual]
+  - repo: local
+    hooks:
+      - id: conventional-commit
+        name: Conventional Commit
+        entry: cog verify --file
+        language: system
+        stages: [commit-msg]
