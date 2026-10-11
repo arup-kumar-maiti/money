@@ -1,3 +1,10 @@
 # Map Yahoo Finance symbols to exchange calendar names.
 [symbols]
 AAPL = "NASDAQ"
+AMZN = "NASDAQ"
+GOOG = "NASDAQ"
+GOOGL = "NASDAQ"
+META = "NASDAQ"
+MSFT = "NASDAQ"
+NFLX = "NASDAQ"
+NVDA = "NASDAQ"
