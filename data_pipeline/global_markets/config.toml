@@ -1,0 +1,3 @@
+# Map Yahoo Finance symbols to exchange calendar names.
+[symbols]
+AAPL = "NASDAQ"

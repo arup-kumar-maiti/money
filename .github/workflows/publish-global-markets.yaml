@@ -1,0 +1,45 @@
+---
+name: Publish global markets image
+
+"on":
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish-global-markets
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Build and push image
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      ARTIFACT_REGISTRY_REPOSITORY: ${{ vars.ARTIFACT_REGISTRY_REPOSITORY }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: docker/setup-buildx-action@v4
+      - uses: google-github-actions/auth@v3
+        with:
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      - uses: google-github-actions/setup-gcloud@v3
+      - run: |
+          gcloud auth configure-docker \
+            "${ARTIFACT_REGISTRY_REPOSITORY%%/*}" --quiet
+      - uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: data_pipeline/global_markets/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ env.ARTIFACT_REGISTRY_REPOSITORY }}/global_markets:latest
+          labels: org.opencontainers.image.revision=${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

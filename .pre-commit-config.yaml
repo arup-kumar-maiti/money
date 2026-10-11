@@ -64,6 +64,22 @@ repos:
       - id: yamllint
         args: [--strict]
         stages: [pre-commit, manual]
+  - repo: https://github.com/reteps/dockerfmt
+    rev: v0.5.4
+    hooks:
+      - id: dockerfmt
+        stages: [pre-commit]
+      - id: dockerfmt
+        alias: dockerfmt-check
+        args: [--check, --newline, --indent=4, --space-redirects]
+        stages: [manual]
+  - repo: https://github.com/AleksaC/hadolint-py
+    rev: v2.15.1
+    hooks:
+      - id: hadolint
+        args: [--failure-threshold, style]
+        exclude: \.dockerignore$
+        stages: [pre-commit, manual]
   - repo: local
     hooks:
       - id: conventional-commit
