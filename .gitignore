@@ -1,4 +1,5 @@
 .venv/
+gha-creds-*.json
 
 *.py[cod]
 __pycache__/
