@@ -37,7 +37,7 @@ OHLCV_SCHEMA = pa.schema(
     ],
 )
 
-TABLE_URI = f"gs://{GCS_BUCKET}/data_pipeline/global_markets/yahoo_finance"
+TABLE_URI = f"gs://{GCS_BUCKET}/data_pipeline/global_markets/bronze/yahoo_finance"
 
 
 def update_symbol(
