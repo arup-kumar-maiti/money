@@ -80,6 +80,17 @@ repos:
         args: [--failure-threshold, style]
         exclude: \.dockerignore$
         stages: [pre-commit, manual]
+  - repo: https://github.com/sqlfluff/sqlfluff
+    rev: 4.4.0
+    hooks:
+      - id: sqlfluff-fix
+        stages: [pre-commit]
+      - id: sqlfluff-lint
+        alias: sqlfluff-format-check
+        args: [--rules, "layout,capitalisation"]
+        stages: [manual]
+      - id: sqlfluff-lint
+        stages: [pre-commit, manual]
   - repo: local
     hooks:
       - id: conventional-commit

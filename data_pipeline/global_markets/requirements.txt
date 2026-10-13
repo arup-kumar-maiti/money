@@ -1,3 +1,4 @@
 deltalake==1.6.6
+google-cloud-bigquery==3.46.1
 pandas-market-calendars==5.5.0
 pyarrow==26.0.0
