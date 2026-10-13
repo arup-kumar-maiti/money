@@ -1,0 +1,4 @@
+# Managed by repo-standards
+[sqlfluff]
+dialect = bigquery
+max_line_length = 120
